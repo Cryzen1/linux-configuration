@@ -23,6 +23,45 @@
       "Block": ["https://localhost/*"],
       "Exceptions": ["https://localhost/*"]
     },
+    "Containers": {
+      "Default": [
+        {
+          "name": "Personal",
+          "icon": "fingerprint",
+          "color": "blue"
+        },
+        {
+          "name": "Development",
+          "icon": "fingerprint",
+          "color": "turquoise"
+        },
+        {
+          "name": "School",
+          "icon": "fingerprint",
+          "color": "green"
+        },
+        {
+          "name": "Work",
+          "icon": "fingerprint",
+          "color": "yellow"
+        },
+        {
+          "name": "Shopping",
+          "icon": "fingerprint",
+          "color": "orange"
+        },
+        {
+          "name": "Artificial Intelligence",
+          "icon": "fingerprint",
+          "color": "red"
+        },
+        {
+          "name": "Twitch",
+          "icon": "fingerprint",
+          "color": "purple"
+        }
+      ]
+    },
     "Extensions": {
       "Install": [
         "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi",

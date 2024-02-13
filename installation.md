@@ -4,18 +4,25 @@ This guide provides a list of commands to optimize the installation of Fedora fo
 
 ## Table of Contents
 
-- [Dependencies](#dependencies)
-- [Additional Dependencies](#additional-dependencies)
-- [Zsh Configuration](#zsh-configuration)
-- [NPM without sudo Configuration](#npm-without-sudo-configuration)
-- [Neovim Configuration](#neovim-configuration)
-- [Appearance Configuration](#appearance-configuration)
-- [Terminal Setup](#terminal-setup)
-- [Librewolf Configuration](#librewolf-configuration)
+- [Installation](#installation)
+  - [Dependencies](#dependencies)
+  - [Additional Dependencies](#additional-dependencies)
+  - [Zsh Configuration](#zsh-configuration)
+  - [NPM without sudo Configuration](#npm-without-sudo-configuration)
+  - [Neovim Configuration](#neovim-configuration)
+  - [Appearance Configuration](#appearance-configuration)
+  - [Terminal Setup](#terminal-setup)
+  - [Librewolf Configuration](#librewolf-configuration)
+- [All in one commands](#all-in-one-commands)
+  - [Dependencies and software](#dependencies-and-software)
+  - [ZSH shell configuration](#zsh-shell-configuration)
+    - [By copying .zshrc file](#by-copying-.zshrc-file)
+    - [By manually editing .zshrc file](#by-manually-editing-.zshrc-file)
+  - [Neovim and Librewolf configuration](#neovim-and-librewolf-configuration)
 
-## Installation
+### Installation
 
-### Dependencies
+#### Dependencies
 
 - Install free, non-free and other necessary repositories:
 
@@ -28,10 +35,10 @@ sudo dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.re
 - Install necessary programs:
 
 ```bash
-sudo dnf install gtk-murrine-engine sassc gnome-themes-extra cargo sqlite git zsh syncthing xclip gh neovim
+sudo dnf install git zsh cargo sqlite syncthing gh neovim
 ```
 
-### Additional Dependencies
+#### Additional Dependencies
 
 - Install the additional dependencies for NVIDIA graphics drivers:
 
@@ -39,7 +46,7 @@ sudo dnf install gtk-murrine-engine sassc gnome-themes-extra cargo sqlite git zs
 sudo dnf install akmod-nvidia
 ```
 
-### ZSH Configuration
+#### ZSH Configuration
 
 - Create the necessary directories for ZSH configuration:
 
@@ -73,7 +80,7 @@ source "${HOME}/.zsh-essentials/plugins/zsh-syntax-highlighting/zsh-syntax-highl
 source "${HOME}/.zsh-essentials/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
 ```
 
-### NPM without sudo Configuration
+#### NPM without sudo Configuration
 
 - Get the newest Node binaries from this URL: `https://nodejs.org/dist/latest/`
 
@@ -102,7 +109,7 @@ NPM_PACKAGES="${HOME}/.npm-packages"
 export PATH="$PATH:$NPM_PACKAGES/bin"
 ```
 
-### Neovim Configuration
+#### Neovim Configuration
 
 - Clone the AstroNvim configuration repository for Neovim:
 
@@ -116,7 +123,7 @@ git clone https://github.com/AstroNvim/AstroNvim ~/.config/nvim
 git clone https://github.com/Cryzen1/astronvim-config ~/.config/nvim/lua/user
 ```
 
-### Appearance Configuration
+#### Appearance Configuration
 
 - Install Fluent GTK Theme:
 
@@ -144,7 +151,7 @@ https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.zip
 tar -xvf FiraCode.zip ~/.local/share/fonts/FiraCode
 ```
 
-### Terminal setup:
+#### Terminal setup:
 
 - Kitty installation:
 
@@ -186,7 +193,7 @@ color15               #d8d8d8
 selection_foreground  #222221
 ```
 
-### Librewolf Configuration
+#### Librewolf Configuration
 
 - Copy librewolf.overrides.cfg into Librewolf's directory (located in "/usr/share/librewolf" by default):
 
@@ -197,5 +204,55 @@ sudo cp ./librewolf/librewolf.overrides.cfg /usr/share/librewolf/librewolf.overr
 - Copy policies.json into Librewolf's distribution directory (located in "/usr/share/librewolf" by default):
 
 ```bash
+sudo cp ./librewolf/policies.json /usr/share/librewolf/distribution/policies.json
+```
+
+### All in one commands
+
+#### Dependencies and software
+
+```bash
+sudo dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+sudo dnf config-manager --add-repo https://rpm.librewolf.net/librewolf-repo.repo
+sudo dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
+sudo dnf install git zsh cargo sqlite syncthing gh neovim
+sudo dnf install akmod-nvidia
+
+mkdir -p ~/.zsh-essentials/{themes,plugins}
+
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.zsh-essentials/themes/powerlevel10k
+git clone --depth 1 -- https://github.com/marlonrichert/zsh-autocomplete.git ~/.zsh-essentials/plugins/zsh-autocomplete
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh-essentials/plugins/zsh-syntax-highlighting
+
+sudo cp -r {bin,share,lib,include} /usr/
+mkdir ~/.npm-packages
+npm config set prefix "${HOME}/.npm-packages"
+```
+
+#### ZSH shell configuration
+
+##### By copying .zshrc file
+
+```bash
+cp ./shell/.zshrc ~/.zshrc
+```
+
+##### By manually editing .zshrc file
+
+```bash
+source "${HOME}/.zsh-essentials/themes/powerlevel10k/powerlevel10k.zsh-theme"
+source "${HOME}/.zsh-essentials/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+source "${HOME}/.zsh-essentials/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
+
+NPM_PACKAGES="${HOME}/.npm-packages"
+export PATH="$PATH:$NPM_PACKAGES/bin"
+```
+
+#### Neovim and Librewolf configuration
+
+```bash
+git clone https://github.com/AstroNvim/AstroNvim ~/.config/nvim
+git clone https://github.com/Cryzen1/astronvim-config ~/.config/nvim/lua/user
+sudo cp ./librewolf/librewolf.overrides.cfg /usr/share/librewolf/librewolf.overrides.cfg
 sudo cp ./librewolf/policies.json /usr/share/librewolf/distribution/policies.json
 ```
